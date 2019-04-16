@@ -1,0 +1,21 @@
+NETBEGIN 1
+CLUBEGIN 1
+PERBEGIN 1
+CLSBEGIN 1
+HIEBEGIN 1
+VECBEGIN 1
+
+% Reading Pajek Project File  ---    D:\GitHub\netkor\Livro Pajek\Capítulo 2\Exercicio 2\Chapter2\World_trade.paj
+% Reading Network   ---    World.net
+% Reading Network   ---    Imports_manufactures.net
+% Reading Partition   ---    World_system_1980.clu
+% Reading Partition   ---    Continent.clu
+% Reading Partition   ---    World_system.clu
+% Reading Vector   ---    x_coordinates.vec
+% Reading Vector   ---    y_coordinates.vec
+% Reading Vector   ---    Population_1995.vec
+% Reading Vector   ---    GDP_1995.vec
+N 9999 RDPAJ "D:\GitHub\netkor\Livro Pajek\Capítulo 2\Exercicio 2\Chapter2\World_trade.paj"
+% Shrinking
+N 3 SHR 2 3 [1 ,0,1] (3)
+E 3 DRAW 0 0 0 0 0
