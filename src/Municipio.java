@@ -8,6 +8,7 @@ public class Municipio {
 	private boolean capital;
 	private int fator1;
 	private int fator2;
+
 	
 	public Municipio(String linha) {
 		String linhaSemAspas = linha.substring(1, linha.length()-1);
