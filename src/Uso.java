@@ -47,47 +47,32 @@ public class Uso {
 		}
 		
 /*-------------------- ----------------------------------------------------------------*/
-				
-		
-		 Divisas nomeEstado = null;
-		 Divisas nomeDivisa = null;
-		 BufferedReader arqEntrada2;
-		 BufferedReader arqEntrada3;
-		 String linha2;
-		 String linha3;
-		 HashMap<String, Divisas> tabelaD = new HashMap<String,Divisas>();
-		
-		 try {
-				// abre o arquivo para leitura no modo UNICODE (o mesmo formato TXT gerado pelo Excel)
-				arqEntrada2 = new BufferedReader(new InputStreamReader(new FileInputStream("municipios_divisas.txt"), "UNICODE"));
-				arqEntrada3 = new BufferedReader(new InputStreamReader(new FileInputStream("divisas_concatenadas.txt"), "UNICODE"));
-				
-				// percorre o arquivo, linha a linha, armazenando-o na tabela hashing
-				while(true) {
-					linha2 = arqEntrada2.readLine();
-					linha3 = arqEntrada3.readLine();
-					if(linha2 == null) 
-						break;
-					if(linha3 == null) 
-						break;
-					nomeEstado = new Divisas(linha2);
-					nomeDivisa = new Divisas (linha3);
-					tabelaD.put(nomeEstado.getEstado(),nomeEstado);
-					tabelaD.put(nomeDivisa.getDivisas(), nomeDivisa);
+		String linha2;
+		BufferedReader arqEntrada2;
+		Divisas divisas = null;
+		HashMap<String, Divisas> tabelaD = new HashMap<String, Divisas>();
+		try {
+			// abre o arquivo para leitura no modo UNICODE (o mesmo formato TXT gerado pelo Excel)
+			arqEntrada2 = new BufferedReader(new InputStreamReader(new FileInputStream("divisas_concatenadas.txt"), "UNICODE"));
+			// percorre o arquivo, linha a linha, armazenando-o na tabela hashing
+			while(true) {
+				linha2 = arqEntrada2.readLine();
+				if(linha2 == null) break;
 					
-					
-				} 
-				arqEntrada2.close();
-				arqEntrada3.close();
-				
-				// apenas para testar, exibe o conteúdo da tabela hashing:
-				System.out.println(tabelaD);
-				
+				divisas = new Divisas(linha2);
+				tabelaD.put(divisas.getDivisas(),divisas);
 			} 
-			catch(IOException e) {
-				System.out.println("erro no acesso ao arquivo");
-			}		
+			arqEntrada2.close();
+			
+			// apenas para testar, exibe o conteúdo da tabela hashing:
+			System.out.println(tabelaD);
+			
+		} 
+		catch(IOException e) {
+			System.out.println("erro no acesso ao arquivo");
 		}
+		
+	}
 		
 	
 }

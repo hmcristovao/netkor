@@ -11,6 +11,7 @@ public class Municipio {
 
 	
 	public Municipio(String linha) {
+		
 		String linhaSemAspas = linha.substring(1, linha.length()-1);
 		String trechoLinha[] = linhaSemAspas.split(",");
 		this.nomeComEstado 	= trechoLinha[0];
