@@ -59,6 +59,7 @@ public class Uso {
 				if(linha == null) 
 					break;
 				municipio = new Municipio(linha);
+				System.out.println(municipio);
 				tabela.put(municipio.getNomeComEstado(), municipio);
 			} 
 			arqEntrada.close();
