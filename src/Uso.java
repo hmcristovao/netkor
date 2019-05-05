@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -24,8 +25,8 @@ import java.util.Map.Entry;
 public class Uso {
 
 	public static void main(String[] args) {
-		String linha;
-		BufferedReader arqEntrada;
+		String linha, linha_divisas;
+		BufferedReader arqEntrada, arqDivisas;
 		
 		BufferedWriter arquivoSaidaProjeto;
 		BufferedWriter arquivoSaidaRede;
@@ -46,6 +47,29 @@ public class Uso {
 		String arquivoSaidaV1 = "build/fator1.vec";
 		String arquivoSaidaV2 = "build/fator2.vec";
 		String arquivoSaidaV3 = "build/populacao.vec";
+		
+		
+		/*
+		 * Cria o Array com as divisas existentes
+		 * */
+		ArrayList<String> divisas_array = new ArrayList<String>();
+		
+		try
+		{
+			arqDivisas = new BufferedReader(new InputStreamReader(new FileInputStream("divisas_concatenadas.txt"), "UNICODE"));
+			while(true)
+			{
+				linha_divisas = arqDivisas.readLine();
+				if(linha_divisas == null)
+					break;
+				System.out.println(linha_divisas);
+				divisas_array.add(linha_divisas);
+			}
+			arqDivisas.close();
+		}
+		catch(IOException e) {
+			System.err.println("Erro no acesso ao arquivo divisas_concatenadas.txt !");
+		}
 		
 		Municipio municipio = null;
 		HashMap<String, Municipio> tabela = new HashMap<String, Municipio>();
@@ -93,6 +117,85 @@ public class Uso {
 			    arquivoSaidaProjeto.append("\n" + "    " + i + " \"" + nome.substring(3) + "\" ");
 			    arquivoSaidaRede.append("\n" + "    " + i++ + " \"" + nome.substring(3) + "\" ");
 			}
+			
+			
+			i = 1;
+			int j = 1;
+			
+			
+			
+			
+			/*
+			 * Criacao dos arcos//edges
+			 * 
+			 * Obs: Codigo para gerar arcos esta comentado, logo apos o de edges.
+			 * Acredito que so o de Edges seja suficiente, ja que dois arcos A->B e B->A, 
+			 * e o mesmo que um edge A-B, assim fica menos linhas no arquivo .paj.
+			 * */		
+			
+			/*
+			 * Criacao dos edges
+			 * 
+			 * */
+			arquivoSaidaProjeto.append("\n\n*Edges ");
+			for (Entry<String, Municipio> entry_i : tabela.entrySet())
+			{    
+				for (Entry<String, Municipio> entry_j : tabela.entrySet())
+				{   
+					
+				  // Se a cidade A ja foi ligada em B, entao B não necessita ligar com A novamente, redundancia.
+				  if(j > i)
+				  {
+					  // se forem do mesmo estados, entao cria edge com valor 2
+					  if(entry_i.getValue().getEstado().equals(entry_j.getValue().getEstado()) && 
+							  !(entry_i.getKey().equals(entry_j.getKey())) )
+					  {
+						  arquivoSaidaProjeto.append("\n"+i+" "+j+" 2");
+					  }
+					  // se forem de estados vizinhos, entao cria edge com valor 1
+					  else if(divisas_array.contains(entry_i.getValue().getEstado().concat(entry_j.getValue().getEstado())))
+					  {
+						  arquivoSaidaProjeto.append("\n"+i+" "+j+" 1");
+					  }  
+				  }
+				  j++; 
+				}
+				
+				i++;
+				j = 1;
+			}
+			
+			
+			
+			/*
+			 *  Criacao das arestas
+			 * */
+			
+/*			
+ * 			arquivoSaidaProjeto.append("\n\n*Arcs ");
+ * 
+ * 			for (Entry<String, Municipio> entry_i : tabela.entrySet())
+			{    
+				for (Entry<String, Municipio> entry_j : tabela.entrySet())
+				{   
+					
+				  // se forem do mesmo estados, entao cria arco com valor 2
+				  if(entry_i.getValue().getEstado().equals(entry_j.getValue().getEstado()) && 
+						  !(entry_i.getKey().equals(entry_j.getKey())) )
+				  {
+					  arquivoSaidaProjeto.append("\n"+i+" "+j+" 2");
+				  }
+				  // se forem de estados vizinhos, entao cria arco com valor 1
+				  else if(divisas_array.contains(entry_i.getValue().getEstado().concat(entry_j.getValue().getEstado())))
+				  {
+					  arquivoSaidaProjeto.append("\n"+i+" "+j+" 1");
+				  }
+				  j++; 
+				}
+				
+				i++;
+				j = 1;
+			}*/
 			
 			//Gerando particao dos estados
 			arquivoSaidaProjeto.append("\n\n*Partition "+ arquivoSaidaPart1.substring(6));
