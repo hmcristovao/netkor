@@ -122,8 +122,9 @@ public class Uso {
 			i = 1;
 			int j = 1;
 			
-			
-			
+			//Deve ser gerado *Arcs antes do *Edges
+			arquivoSaidaRede.append("\n\n*Arcs");
+			arquivoSaidaProjeto.append("\n\n*Arcs");
 			
 			/*
 			 * Criacao dos arcos//edges
@@ -137,7 +138,8 @@ public class Uso {
 			 * Criacao dos edges
 			 * 
 			 * */
-			arquivoSaidaProjeto.append("\n\n*Edges ");
+			arquivoSaidaRede.append("\n*Edges");
+			arquivoSaidaProjeto.append("\n*Edges");
 			for (Entry<String, Municipio> entry_i : tabela.entrySet())
 			{    
 				for (Entry<String, Municipio> entry_j : tabela.entrySet())
@@ -150,12 +152,14 @@ public class Uso {
 					  if(entry_i.getValue().getEstado().equals(entry_j.getValue().getEstado()) && 
 							  !(entry_i.getKey().equals(entry_j.getKey())) )
 					  {
-						  arquivoSaidaProjeto.append("\n"+i+" "+j+" 2");
+						  arquivoSaidaRede.append("\n     "+i+"      "+j+"       2");
+						  arquivoSaidaProjeto.append("\n     "+i+"      "+j+"       2");
 					  }
 					  // se forem de estados vizinhos, entao cria edge com valor 1
 					  else if(divisas_array.contains(entry_i.getValue().getEstado().concat(entry_j.getValue().getEstado())))
 					  {
-						  arquivoSaidaProjeto.append("\n"+i+" "+j+" 1");
+						  arquivoSaidaRede.append("\n     "+i+"      "+j+"       1");
+						  arquivoSaidaProjeto.append("\n     "+i+"      "+j+"       1");
 					  }  
 				  }
 				  j++; 
@@ -398,30 +402,30 @@ public class Uso {
 			for (Entry<String, Municipio> entry : tabela.entrySet())
 			{  
 				municipioSaida = entry.getValue();  
-			    if(municipioSaida.getPorte().contains("Pequeno I")) 
+			    if(municipioSaida.getPorte().equals("Pequeno I")) 
 			    {
 			    	arquivoSaidaProjeto.append("\n 1");
 			    	arquivoSaidaParticao3.append("\n 1");
 			    }
-			    else if(municipioSaida.getPorte().contains("Pequeno II"))
+			    else if(municipioSaida.getPorte().equals("Pequeno II"))
 			    {
 			    	arquivoSaidaProjeto.append("\n 2");
 			    	arquivoSaidaParticao3.append("\n 2");
 			    }
-			    else if(municipioSaida.getPorte().contains("Médio"))
+			    else if(municipioSaida.getPorte().equals("Médio"))
 			    {
 			    	arquivoSaidaProjeto.append("\n 3");
 			    	arquivoSaidaParticao3.append("\n 3");
 			    }
-			    else if(municipioSaida.getPorte().contains("Grande"))
+			    else if(municipioSaida.getPorte().equals("Grande"))
 			    {
 			    	arquivoSaidaProjeto.append("\n 4");
 			    	arquivoSaidaParticao3.append("\n 4");
 			    }
-			    else
+			    else if(municipioSaida.getPorte().equals("Metrópole"))
 			    {
-			    	arquivoSaidaProjeto.append("\n 999");
-			    	arquivoSaidaParticao3.append("\n 999");
+			    	arquivoSaidaProjeto.append("\n 5");
+			    	arquivoSaidaParticao3.append("\n 5");
 			    }
 			}
 			
