@@ -123,8 +123,8 @@ public class Uso {
 			int j = 1;
 			
 			//Deve ser gerado *Arcs antes do *Edges
-			arquivoSaidaRede.append("\n\n*Arcs");
-			arquivoSaidaProjeto.append("\n\n*Arcs");
+			arquivoSaidaRede.append("\n*Arcs");
+			arquivoSaidaProjeto.append("\n*Arcs");
 			
 			/*
 			 * Criacao dos arcos//edges
